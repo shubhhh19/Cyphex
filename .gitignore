@@ -1,0 +1,12 @@
+# Node
+node_modules/
+.env
+*.log
+
+# Build
+dist/
+build/
+.vercel/
+
+# OS
+.DS_Store

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyphex - Advanced Email Security Scanner</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-black text-white overflow-x-hidden">
+    <!-- Three.js Background Container -->
+    <div id="canvas-container" class="fixed inset-0 z-0"></div>
+    
+    <!-- Scanline Effect -->
+    <div class="scanline"></div>
+    
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 relative min-h-screen flex flex-col">
+        <!-- Navigation -->
+        <nav class="flex justify-between items-center px-8 pt-6">
+            <div class="flex items-center">
+                <img src="/logo-simple.svg" alt="Cyphex Logo" class="h-8 w-auto logo-img" onerror="console.error('Logo failed to load'); this.style.display='none';">
+                <span class="text-cyan-400 font-bold text-xl ml-2" style="display: none;" id="text-logo">CYPHEX</span>
+            </div>
+            <div class="flex space-x-8">
+                <a href="#home" class="nav-link text-cyan-300 font-semibold hover:text-white transition duration-300">HOME</a>
+                <a href="#how-it-works" class="nav-link text-cyan-300 font-semibold hover:text-white transition duration-300">HOW IT WORKS</a>
+            </div>
+        </nav>
+        
+        <!-- Landing Section -->
+        <section id="home" class="landing-section">
+            <div class="main-content">
+                <img src="/logo-simple.svg" alt="Cyphex Logo" class="mx-auto mb-6 h-24 w-auto logo-img" onerror="console.error('Main logo failed to load'); this.style.display='none';">
+                <p class="text-xl md:text-2xl mb-4 cyber-text font-semibold">Advanced Email Security Scanner</p>
+                <p class="text-cyan-200 mb-6">Check if your email has been exposed in data breaches</p>
+                
+                <!-- Statistics Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-cyan-400">
+                        <div class="text-cyan-400 text-2xl font-bold mb-2">500M+</div>
+                        <div class="text-gray-300 text-sm">Accounts Monitored</div>
+                    </div>
+                    <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-cyan-400">
+                        <div class="text-cyan-400 text-2xl font-bold mb-2">10K+</div>
+                        <div class="text-gray-300 text-sm">Known Breaches</div>
+                    </div>
+                    <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-cyan-400">
+                        <div class="text-cyan-400 text-2xl font-bold mb-2">24/7</div>
+                        <div class="text-gray-300 text-sm">Real-time Updates</div>
+                    </div>
+                </div>
+                
+                <div class="relative flex items-center max-w-xl mx-auto mb-8">
+                    <input 
+                        type="email" 
+                        id="email-input"
+                        placeholder="Enter your email address..." 
+                        class="w-full bg-black bg-opacity-60 border border-cyan-400 rounded-lg py-4 px-6 text-white focus:outline-none input-glow placeholder-cyan-300 text-base"
+                    >
+                    <button 
+                        id="scan-btn"
+                        class="ml-2 bg-gradient-to-r from-cyan-400 to-blue-600 text-white py-3 px-8 rounded-lg cyber-btn font-bold hover:from-cyan-500 hover:to-blue-700 shadow-lg"
+                    >
+                        SCAN
+                    </button>
+                </div>
+                
+                <div id="error-message" class="hidden mt-3 p-2 rounded-lg error-message text-sm"></div>
+                <div id="loading" class="hidden mt-6">
+                    <div class="progress-bar w-full rounded-full"></div>
+                    <p class="mt-2 text-cyan-300 flex items-center justify-center">
+                        <span>Scanning security databases</span>
+                        <span class="terminal-cursor ml-2"></span>
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Results Section (Hidden by default) -->
+        <section id="results" class="section hidden py-20">
+            <div class="max-w-4xl mx-auto bg-black bg-opacity-50 rounded-xl p-8 glow-box">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold neon-text">SECURITY SCAN RESULTS</h2>
+                    <button id="new-scan" class="text-cyan-300 hover:text-cyan-100 transition">
+                        <i class="fas fa-redo mr-2"></i>New Scan
+                    </button>
+                </div>
+                
+                <div id="result-content" class="mb-8">
+                    <!-- Dynamic breach details will be inserted here -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="section py-20">
+            <div class="max-w-6xl mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-12 text-center neon-text">HOW IT WORKS</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-gray-900 bg-opacity-50 p-8 rounded-xl glow-box hover:glow-box transition-all duration-300">
+                        <div class="text-cyan-400 text-4xl mb-4">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Database Scan</h3>
+                        <p class="text-gray-300">Cyphex checks your email against known data breaches from thousands of sources.</p>
+                    </div>
+                    
+                    <div class="bg-gray-900 bg-opacity-50 p-8 rounded-xl glow-box hover:glow-box transition-all duration-300">
+                        <div class="text-cyan-400 text-4xl mb-4">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Secure Processing</h3>
+                        <p class="text-gray-300">Your email is hashed before checking to ensure your privacy is protected.</p>
+                    </div>
+                    
+                    <div class="bg-gray-900 bg-opacity-50 p-8 rounded-xl glow-box hover:glow-box transition-all duration-300">
+                        <div class="text-cyan-400 text-4xl mb-4">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Detailed Report</h3>
+                        <p class="text-gray-300">Get comprehensive information about any breaches and recommended actions.</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-900 bg-opacity-50 p-8 rounded-xl glow-box">
+                    <h3 class="text-3xl font-bold mb-6 text-center neon-text">ABOUT CYPHEX</h3>
+                    <p class="mb-6 text-gray-300 text-lg leading-relaxed">
+                        In today's digital landscape, data breaches are inevitable. Major corporations, social networks, and even government agencies have fallen victim to cyber attacks, exposing billions of user records.
+                    </p>
+                    <p class="mb-6 text-gray-300 text-lg leading-relaxed">
+                        Cyphex was created to empower individuals with knowledge about their digital security. By checking if your email has been compromised in known data breaches, you can take proactive steps to protect your online identity.
+                    </p>
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        Our mission is to make cybersecurity awareness accessible to everyone, not just tech experts. We believe that understanding your digital footprint is the first step toward better online safety.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="py-12 border-t border-gray-800">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="flex justify-between items-center">
+                    <div class="text-left">
+                        <img src="/logo-simple.svg" alt="Cyphex Logo" class="h-8 w-auto logo-img mb-2" onerror="console.error('Footer logo failed to load'); this.style.display='none';">
+                        <p class="text-gray-400 text-sm mb-2">Your digital security command center</p>
+                        <p class="text-gray-400 text-xs">© 2025 Cyphex. All rights reserved.</p>
+                    </div>
+                    <div class="text-right">
+                        <div class="flex space-x-4 mb-2">
+                            <a href="https://linkedin.com/in/shubhsoni" target="_blank" class="text-white hover:text-cyan-300 transition duration-300">
+                                <i class="fab fa-linkedin text-xl"></i>
+                            </a>
+                            <a href="https://github.com/shubhhh19" target="_blank" class="text-white hover:text-cyan-300 transition duration-300">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="https://shubhsoni.framer.website/" target="_blank" class="text-white hover:text-cyan-300 transition duration-300">
+                                <i class="fas fa-globe text-xl"></i>
+                            </a>
+                        </div>
+                        <p class="text-gray-400 text-xs">Built from scratch by Shubh Soni</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Remove CDN Three.js and fallback check -->
+    <script src="/js/three.min.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

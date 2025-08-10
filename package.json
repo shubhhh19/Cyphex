@@ -1,0 +1,22 @@
+{
+    "name": "cyphex",
+    "version": "1.0.0",
+    "description": "Email Security Scanner",
+    "main": "server.js",
+    "type": "module",
+    "scripts": {
+        "start": "node server.js",
+        "build": "echo 'No build step required'",
+        "dev": "node server.js"
+    },
+    "dependencies": {
+        "axios": "^1.10.0",
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.0",
+        "express": "^4.21.2",
+        "helmet": "^7.2.0"
+    },
+    "engines": {
+        "node": ">=14.0.0"
+    }
+}
